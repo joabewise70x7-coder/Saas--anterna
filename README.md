@@ -70,3 +70,7 @@ npm run build
 ```
 
 O ambiente de execução usado para a auditoria não possui acesso de rede ao GitHub, então `npm install`/`npm run build` não puderam ser executados aqui. Não há CI configurado neste repositório para substituir essa validação.
+
+## Auditoria de fundação
+
+A correção desta etapa foi limitada aos problemas de integridade, RLS, Storage, acoplamento da rota inicial e higiene de secrets identificados na auditoria. O MVP permanece deliberadamente bloqueado até aprovação.
