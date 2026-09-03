@@ -1,8 +1,32 @@
-import { Navigate, Route, Routes, useParams } from 'react-router-dom'
+import { Route, Routes, useParams } from 'react-router-dom'
 import { useTenant } from './hooks/useTenant'
 import { useTenantTheme } from './hooks/useTenantTheme'
 import { isSupabaseConfigured } from './lib/supabase'
 import './styles.css'
+
+function FoundationHome() {
+  return (
+    <main className="state">
+      <section className="tenant-card">
+        <div className="eyebrow">SaaS Anterna</div>
+        <h1>Fundação Multi-Tenant</h1>
+        <p>Acesse uma URL de tenant para visualizar a fundação pública da aplicação.</p>
+      </section>
+    </main>
+  )
+}
+
+function NotFound() {
+  return (
+    <main className="state">
+      <section className="tenant-card">
+        <div className="eyebrow">404</div>
+        <h1>Página não encontrada</h1>
+        <p>A rota informada não existe.</p>
+      </section>
+    </main>
+  )
+}
 
 function TenantPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -40,9 +64,9 @@ function TenantPage() {
 export default function App() {
   return (
     <Routes>
+      <Route path="/" element={<FoundationHome />} />
       <Route path="/p/:slug" element={<TenantPage />} />
-      <Route path="/" element={<Navigate to="/p/maverick" replace />} />
-      <Route path="*" element={<Navigate to="/p/maverick" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
