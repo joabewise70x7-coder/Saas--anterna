@@ -1,11 +1,15 @@
 import { ArrowRight, ChevronDown, Clock3, MapPin, MessageCircle, Star, UtensilsCrossed } from 'lucide-react'
 import { Route, Routes, useParams } from 'react-router-dom'
 import { useMemo } from 'react'
+import AuthPage from './auth/AuthPage'
+import ProtectedRoute from './auth/ProtectedRoute'
+import AdminPlaceholder from './auth/AdminPlaceholder'
 import { useCatalog } from './hooks/useCatalog'
 import { useTenant } from './hooks/useTenant'
 import { useTenantTheme } from './hooks/useTenantTheme'
 import type { Product } from './types/tenant'
 import './styles.css'
+import './styles/auth.css'
 
 function whatsappUrl(phone: string | null, message: string) {
   if (!phone) return null
@@ -98,5 +102,15 @@ function FoundationHome() { return <main className="state-screen"><div className
 function NotFound() { return <main className="state-screen"><div className="state-card"><span className="state-icon">404</span><h1>Página não encontrada</h1><p>O endereço informado não existe.</p></div></main> }
 
 export default function App() {
-  return <Routes><Route path="/" element={<FoundationHome />} /><Route path="/p/:slug" element={<TenantPage />} /><Route path="*" element={<NotFound />} /></Routes>
+  return (
+    <Routes>
+      <Route path="/" element={<FoundationHome />} />
+      <Route path="/p/:slug" element={<TenantPage />} />
+      <Route path="/login" element={<AuthPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/admin" element={<AdminPlaceholder />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  )
 }
